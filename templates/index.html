@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Recommendation System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #292929;
+            color: #fff;
+            margin: 20px;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            color: #ff6347;
+        }
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #333;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #555;
+            border-radius: 4px;
+            background-color: #444;
+            color: #fff;
+        }
+        input[type="submit"] {
+            background-color: #ff6347;
+            color: #fff;
+            border: none;
+            margin-left: 20%;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #ff7f50;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+            background-color: #555;
+            padding: 10px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+        }
+        li:hover {
+            transform: translateY(-5px); /* Hover effect to lift the box */
+        }
+        .movie-selected {
+            width: 120px; /* Adjust size as needed */
+            height: auto;
+            /* margin-right: 10px; */
+            margin-left: 45% ;
+        
+        }
+        .movie-poster {
+            width: 80px; /* Adjust size as needed */
+            height: auto;
+            margin-right: 10px;
+            
+        
+        }
+        .movie_text {
+            width: 400px;
+            font-size: 16px;
+            color: #ffffff; /* Yellow color */
+            font-weight: bold;
+        }
+        .rating {
+            width: 80px;
+            font-size: 20px;
+            margin-left: auto; /* Push the rating to the right */
+            color: #ffc107; /* Yellow color */
+            font-weight: bold;
+        }
+        #movie_title {
+            /* width: 100%; Full width for input field */
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s ease;
+        }
+        #movies {
+            /* width: 100%; Full width for dropdown */
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <h1>Movie Recommendation System with Weighted Ratings</h1>
+    <form method="post">
+        <label for="movie_title">Choose a movie:</label><br>
+        <input list="movies" name="movie_title" id="movie_title" autocomplete="off">
+        <datalist id="movies">
+            {% for movie in movies %}
+                <option value="{{ movie }}">
+            {% endfor %}
+        </datalist>
+        <input type="submit" value="Recommend">
+    </form>
+    <div>
+        {% if recommendations %}
+            <h3 style="color: #ff6347; text-align: center">Recommendations for <span>"{{ selected }}" ordered by similarity with the weighted rating</h3>
+            <img src="/poster/{{ selected_movie_id }}" alt="{{ selected_movie_id }}" class="movie-selected">
+            <ul>
+                {% for id, movie, rating in recommendations %}
+                    <li>
+                        <img src="/poster/{{ id }}" alt="{{ movie }}" class="movie-poster">
+                        <span class="movie_text">{{ movie }}</span>
+                        <span class="rating">{{ '{:.2f}'.format(rating) }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</body>
+</html>
