@@ -15,7 +15,7 @@ with open('data/movies.pkl', 'rb') as f:
 with open('data/similarity_words.pkl', 'rb') as f:
     similarity_words = pickle.load(f)
 
-TMDB_API_KEY = '980b61cc43cda2cab96f39081f1075ac'
+TMDB_API_KEY = 'YOUR API IMDB KEY'
 
 def get_movie_poster(movie_id):
     url = f'https://api.themoviedb.org/3/movie/{movie_id}?api_key={TMDB_API_KEY}&language=en-US'
